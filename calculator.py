@@ -7,7 +7,7 @@ from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.label import Label
 from kivy.config import Config
 
-Config.set("graphics", "resizeble", 0)
+Config.set("graphics", "resizable", 0)
 Config.set("graphics", "width", 400)
 Config.set("graphics", "height", 500)
 
@@ -35,6 +35,11 @@ class CalculatorApp(App):
 		self.lbl = Label(text="0", font_size=40,valign="center",
 							halign="right", size_hint = (1, .4), text_size=(400 - 50, 500 * .4 - 50))
 		bl.add_widget(self.lbl)
+
+		gl.add_widget(Button(text="CE", on_press=self.add_num))
+		gl.add_widget(Button(text="C", on_press=self.add_num))
+		gl.add_widget(Button(text="<=", on_press=self.add_num))
+		gl.add_widget(Button(text="/", on_press=self.add_operation))
 
 		gl.add_widget(Button(text="7", on_press=self.add_num))
 		gl.add_widget(Button(text="8", on_press=self.add_num))
