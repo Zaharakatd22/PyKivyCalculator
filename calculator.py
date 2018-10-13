@@ -13,6 +13,13 @@ Config.set("graphics", "height", 500)
 
 
 class CalculatorApp(App):
+
+	def clear_all(self, instance):
+		self.formula = "0"
+		self.update_label()
+	def clear_one(self, instance):
+		self.formula = self.formula[:-1]
+		self.update_label()
 	def update_label(self):
 		self.lbl.text = self.formula
 	def add_num(self, instance):
@@ -22,7 +29,10 @@ class CalculatorApp(App):
 		self.formula += str(instance.text)
 		self.update_label()
 	def add_operation(self, instance):
-		self.formula += str(instance.text)
+		if str(instance.text).lower() == "%":
+			self.formula += "/100*"
+		else:
+			self.formula += str(instance.text)
 		self.update_label()
 	def calc_result(self, instance):
 		self.lbl.text = str(eval(self.lbl.text))
@@ -36,9 +46,9 @@ class CalculatorApp(App):
 							halign="right", size_hint = (1, .4), text_size=(400 - 50, 500 * .4 - 50))
 		bl.add_widget(self.lbl)
 
-		gl.add_widget(Button(text="CE", on_press=self.add_num))
-		gl.add_widget(Button(text="C", on_press=self.add_num))
-		gl.add_widget(Button(text="<=", on_press=self.add_num))
+		gl.add_widget(Button(text="C", on_press=self.clear_all))
+		gl.add_widget(Button(text="<=", on_press=self.clear_one))
+		gl.add_widget(Button(text="%", on_press=self.add_num))
 		gl.add_widget(Button(text="/", on_press=self.add_operation))
 
 		gl.add_widget(Button(text="7", on_press=self.add_num))
