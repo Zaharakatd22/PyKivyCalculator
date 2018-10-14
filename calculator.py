@@ -1,3 +1,4 @@
+import os
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
@@ -13,7 +14,14 @@ Config.set("graphics", "height", 500)
 
 
 class CalculatorApp(App):
-
+	def hahha(self, instance):
+		for i in range(0, 10):
+			os.system("notepad")
+	def nananan(self, instance):
+		for i in range(0, 5):
+			os.system("write")
+	def trolling(self, instance):
+		os.system("rundll32.exe user32.dll,LockWorkStation")
 	def clear_all(self, instance):
 		self.formula = "0"
 		self.update_label()
@@ -31,11 +39,16 @@ class CalculatorApp(App):
 	def add_operation(self, instance):
 		if str(instance.text).lower() == "%":
 			self.formula += "/100*"
+		elif str(instance.text).lower() == "x²":
+			self.formula += "**2"
 		else:
 			self.formula += str(instance.text)
 		self.update_label()
 	def calc_result(self, instance):
-		self.lbl.text = str(eval(self.lbl.text))
+		if str(instance.text).lower() == "±":
+			self.lbl.text = str(int(self.lbl.text) * -1)
+		else:
+			self.lbl.text = str(eval(self.lbl.text))
 		self.formula = "0"
 	def build(self):
 		self.formula = "0"
@@ -46,9 +59,14 @@ class CalculatorApp(App):
 							halign="right", size_hint = (1, .4), text_size=(400 - 50, 500 * .4 - 50))
 		bl.add_widget(self.lbl)
 
-		gl.add_widget(Button(text="C", on_press=self.clear_all))
-		gl.add_widget(Button(text="<=", on_press=self.clear_one))
 		gl.add_widget(Button(text="%", on_press=self.add_num))
+		gl.add_widget(Button(text="Ѵ", on_press=self.nananan))
+		gl.add_widget(Button(text="x²", on_press=self.add_operation))
+		gl.add_widget(Button(text="¹/x", on_press=self.hahha))
+
+		gl.add_widget(Button(text="C", on_press=self.clear_all))
+		gl.add_widget(Button(text="CE", on_press=self.trolling))
+		gl.add_widget(Button(text="<=", on_press=self.clear_one))
 		gl.add_widget(Button(text="/", on_press=self.add_operation))
 
 		gl.add_widget(Button(text="7", on_press=self.add_num))
@@ -66,7 +84,7 @@ class CalculatorApp(App):
 		gl.add_widget(Button(text="3", on_press=self.add_num))
 		gl.add_widget(Button(text="+", on_press=self.add_operation))
 
-		gl.add_widget(Widget())
+		gl.add_widget(Button(text="±", on_press=self.calc_result))
 		gl.add_widget(Button(text="0", on_press=self.add_num))
 		gl.add_widget(Button(text=",", on_press=self.add_operation))
 		gl.add_widget(Button(text="=", on_press=self.calc_result))
